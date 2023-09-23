@@ -103,9 +103,8 @@ def get_search_index_demo(pool_id: int):
         datas["City"] = None
         datas["Year"] = None
         for kw in keywords_list:
-            datas["(pc+wise)-"+kw[0]] = None
-            datas["(pc)-"+kw[0]] = None
-            datas["(wise)-" + kw[0]] = None
+            datas[["(pc+wise)-"+kw[0], "(pc)-"+kw[0], "(wise)-" + kw[0]]] = [None, None, None]
+
         for city in CITY_CODE.keys():
             for year in years:
                 index_row = pd.Series([city, year], index=['City', 'Year'])

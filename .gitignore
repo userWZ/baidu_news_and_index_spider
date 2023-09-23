@@ -1,3 +1,5 @@
 .idea
 pca_statistic_baidu.csv
 *_save.csv
+city.py
+cookie_pool.py
