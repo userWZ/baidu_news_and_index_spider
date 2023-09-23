@@ -44,16 +44,18 @@ def format_data(data: Dict):
     """
     keyword = str(data['word'])
 
-    for kind in ALL_KIND:
-        index_data = data[kind]['avg']
-        formatted_data = {
-            'keyword': [keyword_info['name'] for keyword_info in json.loads(keyword.replace('\'', '"'))],
-            'type': kind,
-            'year': data['year'],
-            'index': index_data if index_data else '0'
-        }
 
-        yield formatted_data
+    index_all_data = data['all']['avg']
+    index_pc_data = data['pc']['avg']
+    index_wise_data = data['wise']['avg']
+    formatted_data = {
+        'keyword': [keyword_info['name'] for keyword_info in json.loads(keyword.replace('\'', '"'))],
+        'all': index_all_data if index_all_data else '0',
+        'pc': index_pc_data if index_pc_data else '0',
+        'wise': index_wise_data if index_wise_data else '0',
+    }
+
+    yield formatted_data
 
 def decrypt_func(kw, kind, encrypt_data):
     """

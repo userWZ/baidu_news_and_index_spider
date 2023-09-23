@@ -103,7 +103,9 @@ def get_search_index_demo(pool_id: int):
         datas["City"] = None
         datas["Year"] = None
         for kw in keywords_list:
-            datas[kw] = None
+            datas["(pc+wise)-"+kw[0]] = None
+            datas["(pc)-"+kw[0]] = None
+            datas["(wise)-" + kw[0]] = None
         for city in CITY_CODE.keys():
             for year in years:
                 index_row = pd.Series([city, year], index=['City', 'Year'])
@@ -131,11 +133,13 @@ def get_search_index_demo(pool_id: int):
                         area=CITY_CODE[city],
                 ):
                     index["keyword"] = ",".join(index["keyword"])
-                    datas.at[col, index["keyword"]] = index['index']
+                    datas.at[col, "(pc+wise)-"+index["keyword"]] = index['all']
+                    datas.at[col, "(pc)-"+index["keyword"]] = index['pc']
+                    datas.at[col, "(wise)-"+index["keyword"]] = index['wise']
 
                 requested_keywords.extend(cur_keywords_list)
                 print(f"请求完成: {cur_keywords_list}")
-                time.sleep(10)
+                time.sleep(15)
             except:
                 print(f"请求出错, requested_keywords: {requested_keywords}")
                 datas.to_csv(f"./res/index_{pool_id}.csv", index=False)
