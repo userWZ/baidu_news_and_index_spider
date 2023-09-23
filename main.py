@@ -67,7 +67,6 @@ def search(kw='', site='chinaso'):
 
 
 def statistic(pca):
-
     pca_data_raw = pd.read_csv(f'{pca}.csv', header=None)
     pca_data_raw.fillna(value='', inplace=True)
     pca_data_raw.columns = ['ch', 'p', 'c', 'a', 'k1', 'k2']
@@ -101,13 +100,19 @@ def statistic(pca):
             # time.sleep(1)
         end = time.perf_counter()
         print('统计', district[1], '耗时：', end - start)
-        pca_df.to_csv(f'{pca}_save.csv', index=False)
+
+        pca_df.to_csv(f'{pca}_save.csv', index=False, encoding='utf-8-sig')
+
+    pca_df.astype('int', errors='ignore')
+    pca_df.to_csv(f'{pca}_save.csv', index=False, encoding='utf-8-sig')
 
 
 if __name__ == '__main__':
-    pca_file = ['pca1', 'pca2', 'pca3', 'pca4']
-    pool = Pool(processes=4)
-    pool.map(statistic, pca_file)
-    pool.close()
-    pool.join()
+    # pca_file = ['pca1', 'pca2', 'pca3', 'pca4']
+    # pool = Pool(processes=4)
+    # pool.map(statistic, pca_file)
+    # pool.close()
+    # pool.join()
+
+    statistic('pca')
 # 使用pandas进行数据处理，每一次有新的数据就写入数据表，应该怎么写
